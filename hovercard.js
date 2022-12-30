@@ -14,15 +14,19 @@
     if (hovercard_data) {
       var new_box = document.createElement("div");
       new_box.classList.add("hovercard");
-      new_box.innerHTML = hovercard_data["icon"] + "<strong>" + hovercard_data["title"] + hovercard_data["url"] "</strong><p>" + hovercard_data["description"] + "</p>";
+      new_box.innerHTML = hovercard_data["icon"] + "<strong>" + hovercard_data["title"] + hovercard_data["url"] + "</strong><p>" + hovercard_data["description"] + "</p>";
+      // if photo available, add it
+      if (hovercard_data["photo"]) {
+        new_box.innerHTML = "<img src='" + hovercard_data["photo"] + "' alt='" + hovercard_data["title"] + " photo' /><br>" + new_box.innerHTML;
+      }
       new_box.style.top = window.scrollY + target_link.getBoundingClientRect().top + "px";
       new_box.style.left = window.scrollX + target_link.getBoundingClientRect().left + "px";
       new_box.id = "tooltip";
-      document.body.appendChild(new_box); 
+      document.body.appendChild(new_box);
     }
   }
 
-  function unhover (target_link) {
+  function unhover () {
     var active_hovercard = document.getElementById("tooltip");
 
     if (active_hovercard) {
@@ -37,7 +41,7 @@
       hover(this);
     });
     links[i].addEventListener("mouseout", function() {
-      unhover(this);
+      unhover();
     });
     // these handlers are so that the hovercard will appear/disappear
     // with keyboard actions
@@ -45,7 +49,7 @@
       hover(this);
     });
     links[i].addEventListener("onfocusout", function() {
-      unhover(this);
+      unhover();
     });
   }
 
